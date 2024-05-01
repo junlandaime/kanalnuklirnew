@@ -44,8 +44,8 @@
                             <h3 class="text-indigo-950 text-xl font-bold">{{ $course->sks }}</h3>
                         </div>
                         <div class="hidden md:flex flex-col">
-                            <p class="text-slate-500 text-sm">Teacher</p>
-                            <h3 class="text-indigo-950 text-xl font-bold">Annima Poppo</h3>
+                            <p class="text-slate-500 text-sm">Dosen Pengampu</p>
+                            <h3 class="text-indigo-950 text-xl font-bold">data masih belum ada</h3>
                         </div>
                         <div class="hidden md:flex flex-row items-center gap-x-3">
                             <a href="{{ route('admin.courses.edit', $course) }}"

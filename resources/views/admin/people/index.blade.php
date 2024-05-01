@@ -53,21 +53,21 @@
                             <h3 class="text-indigo-950 text-xl font-bold">{{ $person->user->post->count() }}</h3>
                         </div>
                         <div class="hidden md:flex flex-col">
-                            <p class="text-slate-500 text-sm">Status Postingan</p>
+                            <p class="text-slate-500 text-sm">Status</p>
                             @if ($person->status)
                                 <span class="text-sm w-fit py-2 px-3 rounded-full bg-green-500 text-white font-bold">
-                                    PUBLISH
+                                    Aktif
                                 </span>
                             @else
                                 <span class="text-sm w-fit py-2 px-3 rounded-full bg-slate-500 text-white font-bold">
-                                    NOT PUBLISH
+                                    Pasif
                                 </span>
                             @endif
                         </div>
                         <div class="hidden md:flex flex-row items-center gap-x-3">
                             <a href="{{ route('admin.people.toggle', $person) }}"
                                 class="font-bold py-4 px-6 {{ !$person->status ? 'bg-green-500' : 'bg-red-500' }} text-white rounded-full">
-                                {{ !$person->status ? 'Publish' : 'Draft' }}
+                                {{ !$person->status ? 'Aktifkan' : 'Pasifkan' }}
 
                             </a>
                             <a href="{{ route('admin.people.edit', $person) }}"
