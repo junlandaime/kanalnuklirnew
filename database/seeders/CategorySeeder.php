@@ -19,11 +19,15 @@ class CategorySeeder extends Seeder
                 'slug' => 'informations',
                 'parent_id' => null,
             ],
+        );
+        $category = Category::create(
             [
                 'name' => 'Agenda',
                 'slug' => 'agenda',
                 'parent_id' => null,
-            ],
+            ]
+        );
+        $category = Category::create(
             [
                 'name' => 'Blogs',
                 'slug' => 'blogs',
