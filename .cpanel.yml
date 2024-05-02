@@ -1,7 +1,7 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/kand6253/public_html/
+    - export DEPLOYPATH=/home/kand6253/portal/public/
     - /bin/cp index.html $DEPLOYPATH
     - /bin/cp style.css $DEPLOYPATH
     - /bin/cp -R public $DEPLOYPATH
