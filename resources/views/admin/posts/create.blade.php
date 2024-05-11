@@ -20,12 +20,15 @@
                 <form method="POST" action="{{ route('admin.posts.store') }}" enctype="multipart/form-data">
                     @csrf
 
-                    <div>
+                    <div x-data={pesan:''}>
                         <x-input-label for="title" :value="__('Judul Postingan')" />
-                        <x-text-input id="title" class="block mt-1 w-full" type="text" name="title"
-                            :value="old('title')" required autofocus autocomplete="title" />
+                        <x-text-input x-model="pesan" id="title" class="block mt-1 w-full" type="text"
+                            name="title" :value="old('title')" required autofocus autocomplete="title" />
+                        <p class="text-sm text-green-600 space-y-1" :class="pesan.length > 50 ? 'text-red-500' : ''"
+                            x-text="pesan.length"></p>
                         <x-input-error :messages="$errors->get('title')" class="mt-2" />
                     </div>
+
 
                     <div class="mt-4">
                         <x-input-label for="image" :value="__('Gambar Postingan')" />
@@ -118,4 +121,5 @@
     <script>
         CKEDITOR.replace('body');
     </script>
+    {{-- <script src="//unpkg.com/alpinejs" defer></script> --}}
 </x-app-layout>

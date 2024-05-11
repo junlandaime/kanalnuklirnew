@@ -13,7 +13,6 @@
         <div class="container xl:px-[160px]">
             <ul class="breadcrumb">
                 <li><a href="{{ route('front.index') }}">Home</a></li>
-                <li><a href="javascript:;">Pages</a></li>
                 <li class="active">News</li>
             </ul>
             <!-- BEGIN SIDEBAR & CONTENT -->
@@ -39,8 +38,8 @@
                                     class="flex flex-col rounded-t-[12px] rounded-b-[24px] bg-white w-full overflow-hidden">
                                     <a href="{{ route('front.news_details', $posts->first()) }}"
                                         class=" w-full h-[300px] shrink-0 rounded-[10px] overflow-hidden">
-                                        <img src="{{ Storage::url($posts->first()->image) }}" class="w-full h-full "
-                                            alt="thumbnail">
+                                        <img src="{{ Storage::url($posts->first()->image) }}"
+                                            class="w-full h-full object-contain" alt="{{ $posts->first()->title }}">
                                     </a>
                                 </div>
 

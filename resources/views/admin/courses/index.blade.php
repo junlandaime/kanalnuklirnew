@@ -31,8 +31,9 @@
                     <div class="item-card flex flex-col md:flex-row gap-y-10 justify-between md:items-center">
                         <div class="flex flex-row items-center gap-x-3">
                             <div class="flex flex-col">
-                                <h3 class="text-indigo-950 text-xl font-bold">{{ $course->name }}</h3>
-                                <p class="text-slate-500 text-sm">Cardio</p>
+                                <h3 class="text-indigo-950 text-xl font-bold text-wrap w-36 truncate">
+                                    {{ $course->name }}</h3>
+                                <p class="text-slate-500 text-sm"></p>
                             </div>
                         </div>
                         <div class="hidden md:flex flex-col">

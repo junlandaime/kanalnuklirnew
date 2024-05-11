@@ -28,14 +28,14 @@ class FrontController extends Controller
     public function people()
     {
         $people = Person::where('status', 1)->orderBy('name', 'asc')->get();
-        $subjects = Subject::orderBy('id', 'desc')->get();
+        $subjects = Subject::where('name', '!=', '')->orderBy('name', 'asc')->get();
 
         return view('front.people', compact('people', 'subjects'));
     }
 
     public function people_details(Person $person)
     {
-        $people = Person::where('status', 1)->orderBy('name', 'desc')->paginate(8);
+        $people = Person::where('status', 1)->orderBy('name', 'asc')->get();
         return view('front.details', compact('person', 'people'));
     }
 

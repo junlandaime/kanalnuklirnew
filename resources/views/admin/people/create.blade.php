@@ -151,7 +151,7 @@
 
                     <div class="mt-4">
                         <x-input-label for="file" :value="__('Subject Areas Person')" />
-                        <p class="my-1 text-xs text-slate-400">pisahkan dengan coma</p>
+                        {{-- <p class="my-1 text-xs text-slate-400">pisahkan dengan coma</p> --}}
                         <div class="relative w-full">
                             <input type="hidden" class="form-control" name="subjs" id="perSubjs">
                             <input type="text" id="name-subject" name="subjects"

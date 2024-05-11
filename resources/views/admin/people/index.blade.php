@@ -34,7 +34,7 @@
                             <img src="{{ Storage::url($person->foto) }}" alt="{{ $person->name }}"
                                 class="rounded-2xl object-cover w-[120px] h-[90px]">
                             <div class="flex flex-col">
-                                <h3 class="text-indigo-950 text-xl font-bold">{{ $person->name }}</h3>
+                                <h3 class="text-indigo-950 text-xl font-bold text-wrap w-48">{{ $person->name }}</h3>
                                 <p class="text-slate-500 text-sm">{{ $person->email }}</p>
                                 <p class="text-slate-900 text-xs">created_at {{ $person->created_at->diffForHumans() }}
                                 </p>
@@ -42,7 +42,7 @@
                         </div>
                         <div class="hidden md:flex flex-col">
                             <p class="text-slate-500 text-sm">Subject Areas</p>
-                            <h3 class="text-indigo-950 text-xs font-base mt-2">
+                            <h3 class="text-indigo-950 text-xs font-base mt-2 text-wrap w-40">
                                 @foreach ($person->subjects as $subject)
                                     {{ $subject->name }} |
                                 @endforeach

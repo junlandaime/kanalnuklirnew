@@ -33,7 +33,7 @@
                             <img src="{{ Storage::url($post->image) }}" alt="{{ $post->title }}"
                                 class="rounded-2xl object-cover w-[120px] h-[90px]">
                             <div class="flex flex-col">
-                                <h3 class="text-indigo-950 text-xl font-bold">{{ $post->title }}</h3>
+                                <h3 class="text-indigo-950 text-xl font-bold text-wrap w-48">{{ $post->title }}</h3>
                                 <p class="text-slate-500 text-sm">{{ $post->category->name }}</p>
                                 <p class="text-slate-900 text-xs">created_at
                                     {{ $post->created_at->format('D d-m-Y h-m-s') }}
@@ -41,8 +41,8 @@
                             </div>
                         </div>
                         <div class="hidden md:flex flex-col">
-                            <p class="text-slate-500 text-sm">Students</p>
-                            <h3 class="text-indigo-950 text-xl font-bold">183409</h3>
+                            <p class="text-slate-500 text-sm">Views</p>
+                            <h3 class="text-indigo-950 text-xl font-bold">-</h3>
                         </div>
                         <div class="hidden md:flex flex-col">
                             <p class="text-slate-500 text-sm">Status Postingan</p>

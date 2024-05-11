@@ -31,7 +31,7 @@
                     <div class="item-card flex flex-row justify-between items-center">
                         <div class="flex flex-row items-center gap-x-3">
                             <div class="flex flex-col">
-                                <h3 class="text-indigo-950 text-xl font-bold">
+                                <h3 class="text-indigo-950 text-xl font-bold text-wrap w-36">
                                     {{ $category->name }}</h3>
                             </div>
 
@@ -58,7 +58,7 @@
                         <div class="item-card flex flex-row justify-between items-center">
                             <div class="flex flex-row items-center gap-x-3">
                                 <div class="flex flex-col">
-                                    <h3 class="text-indigo-950 text">
+                                    <h3 class="text-indigo-950 text text-wrap w-36">
                                         {{ $child->name }}</h3>
                                 </div>
 
