@@ -1,4 +1,15 @@
-{{-- @dd($person->subjects) --}}
+@php
+    $hasil = [];
+
+    foreach ($person->subjects as $sub) {
+        $hasil[] = ['subject' => $sub->name];
+    }
+
+    $result = json_encode($hasil);
+    // $goal = json_parse($result);
+@endphp
+
+{{-- @dd($result) --}}
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -130,6 +141,42 @@
 
                         <x-input-error :messages="$errors->get('status')" class="mt-2" />
                     </div>
+
+
+                    <div class="mt-4" x-data="{ data: JSON.parse('{{ $result }}'), subject: {} }">
+                        <x-input-label for="file" :value="__('Subject Areas Person')" />
+                        {{-- <p class="my-1 text-xs text-slate-400">pisahkan dengan coma</p> --}}
+                        <div class="relative w-full">
+                            <input type="text" id="name-subject" name="subjects" x-model="subject"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 "
+                                placeholder="Subject Areas" :value="old('subjects')" autofocus
+                                autocomplete="subjects" />
+                            <a id="d" @click="data.push({subject})"
+                                class="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-blue-700 rounded-e-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                </svg>
+                            </a>
+                        </div>
+                        <template x-for="(item, index) in data" :key="index">
+                            <div
+                                class="inline-flex mt-3 items-center h-8 overflow-hidden text-white bg-blue-500 rounded">
+                                <span class="px-5 py-1.5 text-[12px] font-medium" x-text="item.subject"></span>
+                                <button @click="data.splice(index, 1);"
+                                    class="inline-flex items-center justify-center w-8 h-8 bg-blue-600 transition-color hover:bg-blue-700 focus:outline-none focus:ring"
+                                    type="button"> <span class="sr-only"> Close </span> <svg class="w-3 h-3"
+                                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd"
+                                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                            clip-rule="evenodd" />
+                                    </svg> </button>
+                            </div>
+                        </template>
+                        <input type="hidden" class="form-control" name="subjs" id="perSubjs"
+                            :value="JSON.stringify(data)">
+                    </div>
+
 
                     <div class="flex items-center justify-end mt-4">
 

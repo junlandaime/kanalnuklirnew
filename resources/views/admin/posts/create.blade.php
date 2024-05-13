@@ -20,11 +20,11 @@
                 <form method="POST" action="{{ route('admin.posts.store') }}" enctype="multipart/form-data">
                     @csrf
 
-                    <div x-data={pesan:''}>
+                    <div x-data="{ pesan: '' }">
                         <x-input-label for="title" :value="__('Judul Postingan')" />
                         <x-text-input x-model="pesan" id="title" class="block mt-1 w-full" type="text"
                             name="title" :value="old('title')" required autofocus autocomplete="title" />
-                        <p class="text-sm text-green-600 space-y-1" :class="pesan.length > 50 ? 'text-red-500' : ''"
+                        <p class="text-sm text-green-600 space-y-1" :class="pesan.length > 75 ? 'text-red-500' : ''"
                             x-text="pesan.length"></p>
                         <x-input-error :messages="$errors->get('title')" class="mt-2" />
                     </div>

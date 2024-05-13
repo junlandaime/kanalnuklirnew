@@ -110,7 +110,7 @@ class FrontController extends Controller
 
     public function course()
     {
-        $courses = Course::orderBy('code', 'desc')->get();
+        $courses = Course::orderBy('code', 'asc')->get();
         return view('front.courses', compact('courses'));
     }
 

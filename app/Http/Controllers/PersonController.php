@@ -38,8 +38,18 @@ class PersonController extends Controller
      */
     public function store(StorePeopleRequest $request)
     {
-        // dd($request->subjs);
-        DB::transaction(function () use ($request) {
+        // $subjek = $request->subjs;
+        $subjek = json_decode($request->subjs, TRUE);
+        $hasil = array();
+
+        foreach ($subjek as $a => $b) {
+            foreach ($b as $c => $d) {
+                $hasil[] = $d;
+            }
+        }
+
+        // dd($hasil);
+        DB::transaction(function () use ($request, $hasil) {
 
             $validated = $request->validated();
 
@@ -64,9 +74,9 @@ class PersonController extends Controller
 
             $person = Person::create($validated);
 
-            $long = $request->subjs;
-            $arraySub = (explode(",", $long));
-            foreach ($arraySub as $sub) {
+            // $long = $request->subjs;
+            // $arraySub = (explode(",", $long));
+            foreach ($hasil as $sub) {
                 $dataSub = Subject::where('name', $sub)->get();
                 if (sizeof($dataSub) != 0) {
                     SubjectPerson::create([
