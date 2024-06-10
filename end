@@ -1,0 +1,47 @@
+[33mcommit 90eb23f558ccd8f6159d175e350f295b51547cca[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: Jundi Abdullah <jdi.jundi99@gmail.com>
+Date:   Tue May 14 05:55:05 2024 +0700
+
+    merapikan file create person dari code sebelumnya dalam hal fungsi menambah tag/subject
+
+[33mcommit c3aa30c219630fe821a893f606213cb9ca95748a[m
+Author: Jundi Abdullah <jdi.jundi99@gmail.com>
+Date:   Tue May 14 05:53:22 2024 +0700
+
+    berhasil membuat sistem pembuatan subject dengan alpinejs, bisa nambah dan kurang, tapi proses update belum
+
+[33mcommit cb429c1fe6c4e375fb26297d72237eb94b4dbeab[m[33m ([m[1;31morigin/main[m[33m)[m
+Author: Jundi Abdullah <jdi.jundi99@gmail.com>
+Date:   Sat May 11 17:12:14 2024 +0700
+
+    Memperbaiki layouting dan mengubah logo web, dan memperbaiki beberapa hal di keseluruhan web baik di front ataupun halaman admin
+
+[33mcommit f916b11554225c4568c1f4266cd97c1fbc534db3[m
+Author: Jundi Abdullah <jdi.jundi99@gmail.com>
+Date:   Thu May 2 16:12:44 2024 +0700
+
+    npm run build buat menyelesaikan masalah di terminal cpanel
+
+[33mcommit 1a17384ed49abd77790af15acffac3cc85110a5c[m
+Author: Jundi Abdullah <jdi.jundi99@gmail.com>
+Date:   Thu May 2 07:03:58 2024 +0700
+
+    mengedit file konfig deployment
+
+[33mcommit 43e7d56171edadbacd01f4a57e9bec18ae0e2e74[m
+Author: Jundi Abdullah <jdi.jundi99@gmail.com>
+Date:   Thu May 2 06:52:54 2024 +0700
+
+    menambahkan file konfigurasi deployment
+
+[33mcommit bce963b6a9fd68901ab244e4c768f0a37f0c7823[m
+Author: Jundi Abdullah <jdi.jundi99@gmail.com>
+Date:   Thu May 2 06:27:21 2024 +0700
+
+    Memastikan lagi beberapa hal sebelum dideploy
+
+[33mcommit 6b1df43bb1ffa9662f7129314daf13541b467045[m
+Author: Jundi Abdullah <jdi.jundi99@gmail.com>
+Date:   Thu May 2 06:10:40 2024 +0700
+
+    Inisiasi Project Kanal Nuklir Baru tahap awal dan memulai deploy di hosting

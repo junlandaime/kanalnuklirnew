@@ -139,8 +139,18 @@ class PersonController extends Controller
      */
     public function update(UpdatePeopleRequest $request, Person $person)
     {
-        // dd($request);
-        DB::transaction(function () use ($request, $person) {
+        // dd($request->subjs);
+
+        $subjek = json_decode($request->subjs, TRUE);
+        $hasil = array();
+
+        foreach ($subjek as $a => $b) {
+            foreach ($b as $c => $d) {
+                $hasil[] = $d;
+            }
+        }
+
+        DB::transaction(function () use ($request, $person, $hasil) {
 
             $validated = $request->validated();
 
@@ -160,6 +170,26 @@ class PersonController extends Controller
 
 
             $person->update($validated);
+            $person->subjects()->detach();
+
+            foreach ($hasil as $sub) {
+                $dataSub = Subject::where('name', $sub)->get();
+                if (sizeof($dataSub) != 0) {
+                    SubjectPerson::create([
+                        'subject_id' => $dataSub[0]->id,
+                        'person_id' => $person->id
+                    ]);
+                } else {
+                    $newSub = Subject::create([
+                        'name' => $sub,
+                        'slug' => Str::slug($sub)
+                    ]);
+                    SubjectPerson::create([
+                        'subject_id' => $newSub->id,
+                        'person_id' => $person->id
+                    ]);
+                }
+            }
         });
 
         return redirect()->route('admin.people.index')->with(['success' => 'Person Berhasil Diedit!']);

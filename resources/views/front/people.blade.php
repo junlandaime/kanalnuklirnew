@@ -42,8 +42,11 @@
                                         <ul class="mix-filter">
                                             <li data-filter="all" class="filter active">All</li>
                                             @foreach ($subjects as $subject)
-                                                <li data-filter="{{ $subject->slug }}" class="filter">{{ $subject->name }}
-                                                </li>
+                                                @if ($subject->people->count() != 0)
+                                                    <li data-filter="{{ $subject->slug }}" class="filter">
+                                                        {{ $subject->name }}
+                                                    </li>
+                                                @endif
                                             @endforeach
                                             {{-- <li data-filter="category_2" class="filter">Web Development</li>
                                             <li data-filter="category_3" class="filter">Photography</li>
