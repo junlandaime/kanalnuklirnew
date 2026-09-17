@@ -4,7 +4,6 @@ namespace App\Mail;
 
 use App\Models\Teacher;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
@@ -15,6 +14,7 @@ class DosenVerifyMail extends Mailable
     use Queueable, SerializesModels;
 
     protected $teacher;
+
     protected $randomPassword;
 
     /**
@@ -45,7 +45,7 @@ class DosenVerifyMail extends Mailable
             view: 'emails.register',
             with: [
                 'teacher' => $this->teacher,
-                'password' => $this->randomPassword
+                'password' => $this->randomPassword,
             ],
         );
     }

@@ -18,13 +18,12 @@ class Post extends Model
         'status',
         'published_at',
         'category_id',
-        'user_id'
+        'user_id',
     ];
 
     protected $dates = [
         'published_at',
     ];
-
 
     public function category()
     {

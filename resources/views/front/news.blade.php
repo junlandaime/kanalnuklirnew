@@ -1,4 +1,3 @@
-{{-- @dd($posts->first()->category->where('id', '!=', 5)->first()) --}}
 @extends('front.layouts.front')
 
 @section('title')
@@ -33,61 +32,62 @@
                         <!-- BEGIN CAROUSEL -->
                         <div class="front-carousel margin-bottom-20">
 
-                            <div class="carousel-inner">
-                                <div
-                                    class="flex flex-col rounded-t-[12px] rounded-b-[24px] bg-white w-full overflow-hidden">
-                                    <a href="{{ route('front.news_details', $posts->first()) }}"
-                                        class=" w-full h-[300px] shrink-0 rounded-[10px] overflow-hidden">
-                                        <img src="{{ Storage::url($posts->first()->image) }}"
-                                            class="w-full h-full object-contain" alt="{{ $posts->first()->title }}">
-                                    </a>
+                            @if ($posts->count() > 0)
+                                <div class="carousel-inner">
+                                    <div
+                                        class="flex flex-col rounded-t-[12px] rounded-b-[24px] bg-white w-full overflow-hidden">
+                                        <a href="{{ route('front.news_details', $posts->first()) }}"
+                                            class=" w-full h-[300px] shrink-0 rounded-[10px] overflow-hidden">
+                                            <img src="{{ Storage::url($posts->first()->image) }}"
+                                                class="w-full h-full object-contain" alt="{{ $posts->first()->title }}">
+                                        </a>
+                                    </div>
+
+                                    <h2 class="font-semibold text-[25px] leading-[35px] "><a
+                                            href="{{ route('front.news_details', $posts->first()) }}">{{ $posts->first()->title }}</a>
+                                    </h2>
+                                    <p>{{ $posts->first()->excerpt }}</p>
+
+                                    <hr class="h-px my-8 bg-gray-300 border-0">
                                 </div>
 
-                                <h2 class="font-semibold text-[25px] leading-[35px] "><a
-                                        href="{{ route('front.news_details', $posts->first()) }}">{{ $posts->first()->title }}</a>
-                                </h2>
-                                <p>{{ $posts->first()->excerpt }}</p>
+                                <!-- BEGIN INFO BLOCK -->
 
-                                <hr class="h-px my-8 bg-gray-300 border-0">
-                            </div>
+                                @foreach ($posts->skip(1) as $post)
+                                    <div class="row">
+                                        <div class="col-md-4 col-sm-4">
+                                            <!-- BEGIN CAROUSEL -->
+                                            <div class="front-carousel">
+                                                <div class="carousel slide" id="myCarousel">
 
-                            <!-- BEGIN INFO BLOCK -->
+                                                    <!-- Carousel items -->
+                                                    <div
+                                                        class="flex flex-col rounded-t-[12px] rounded-b-[24px] gap-[32px] bg-white w-full pb-[10px] overflow-hidden transition-all duration-300">
+                                                        <a href="{{ route('front.news_details', $post) }}"
+                                                            class="thumbnail w-full h-[100px] shrink-0 rounded-[10px] overflow-hidden">
+                                                            <img src="{{ Storage::url($post->image) }}" class="w-full h-full "
+                                                                alt="thumbnail">
+                                                        </a>
+                                                    </div>
 
-
-                            @forelse ($posts->skip(1) as $post)
-                                <div class="row">
-                                    <div class="col-md-4 col-sm-4">
-                                        <!-- BEGIN CAROUSEL -->
-                                        <div class="front-carousel">
-                                            <div class="carousel slide" id="myCarousel">
-
-                                                <!-- Carousel items -->
-                                                <div
-                                                    class="flex flex-col rounded-t-[12px] rounded-b-[24px] gap-[32px] bg-white w-full pb-[10px] overflow-hidden transition-all duration-300">
-                                                    <a href="{{ route('front.news_details', $post) }}"
-                                                        class="thumbnail w-full h-[100px] shrink-0 rounded-[10px] overflow-hidden">
-                                                        <img src="{{ Storage::url($post->image) }}" class="w-full h-full "
-                                                            alt="thumbnail">
-                                                    </a>
                                                 </div>
-
                                             </div>
+                                            <!-- END CAROUSEL -->
                                         </div>
-                                        <!-- END CAROUSEL -->
+                                        <div class="col-md-8 col-sm-8">
+                                            <h2 class="font-semibold text-[20px] leading-[30px]"><a
+                                                    href="{{ route('front.news_details', $post) }}">{{ $post->title }}</a>
+                                            </h2>
+
+                                            <p>{{ $post->excerpt }}</p>
+
+                                        </div>
                                     </div>
-                                    <div class="col-md-8 col-sm-8">
-                                        <h2 class="font-semibold text-[20px] leading-[30px]"><a
-                                                href="{{ route('front.news_details', $post) }}">{{ $post->title }}</a>
-                                        </h2>
-
-                                        <p>{{ $post->excerpt }}</p>
-
-                                    </div>
-                                </div>
-                                <hr class="h-px my-8 bg-gray-300 border-0">
-                            @empty
-                            @endforelse
-
+                                    <hr class="h-px my-8 bg-gray-300 border-0">
+                                @endforeach
+                            @else
+                                <p class="text-slate-500 py-4">Belum ada berita terbaru.</p>
+                            @endif
 
                         </div>
                     </div>

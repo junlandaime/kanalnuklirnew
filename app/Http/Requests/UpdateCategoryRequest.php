@@ -23,7 +23,7 @@ class UpdateCategoryRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:50',
-            'parent_id' => 'sometimes'
+            'parent_id' => 'sometimes',
         ];
     }
 }

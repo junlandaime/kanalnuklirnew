@@ -36,7 +36,7 @@ class StorePeopleRequest extends FormRequest
             'publication' => 'sometimes',
             'hki' => 'sometimes',
             'foto' => 'sometimes|image|mimes:png,jpg,jpeg',
-            'status' => 'required|integer'
+            'status' => 'required|integer',
         ];
     }
 }

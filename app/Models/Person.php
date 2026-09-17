@@ -26,7 +26,7 @@ class Person extends Model
         'hki',
         'foto',
         'status',
-        'user_id'
+        'user_id',
     ];
 
     public function subjects()

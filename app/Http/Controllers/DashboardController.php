@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
-use App\Models\User;
+use App\Models\Category;
 use App\Models\Course;
 use App\Models\Person;
+use App\Models\Post;
 use App\Models\Teacher;
-use App\Models\Category;
-use Illuminate\Http\Request;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller

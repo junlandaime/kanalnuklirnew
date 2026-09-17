@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Course;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StoreCourseRequest;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Course;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class CourseController extends Controller
 {
@@ -16,10 +14,7 @@ class CourseController extends Controller
      */
     public function index()
     {
-        //
-
         $courses = Course::orderBy('id', 'desc')->get();
-
 
         return view('admin.courses.index', compact('courses'));
     }
@@ -29,7 +24,6 @@ class CourseController extends Controller
      */
     public function create()
     {
-        //
         return view('admin.courses.create');
     }
 
@@ -38,16 +32,14 @@ class CourseController extends Controller
      */
     public function store(StoreCourseRequest $request)
     {
-        // dd($request);
-        //
         DB::transaction(function () use ($request) {
-
             $validated = $request->validated();
 
             $validated['slug'] = Str::slug($validated['name']);
 
             Course::create($validated);
         });
+
         return redirect()->route('admin.courses.index')->with(['success' => 'Mata Kuliah Baru Ditambahkan!']);
     }
 
@@ -64,7 +56,6 @@ class CourseController extends Controller
      */
     public function edit(Course $course)
     {
-        //
         return view('admin.courses.edit', compact('course'));
     }
 
@@ -74,13 +65,13 @@ class CourseController extends Controller
     public function update(StoreCourseRequest $request, Course $course)
     {
         DB::transaction(function () use ($request, $course) {
-
             $validated = $request->validated();
 
             $validated['slug'] = Str::slug($validated['name']);
 
             $course->update($validated);
         });
+
         return redirect()->route('admin.courses.index')->with(['success' => 'Mata Kuliah Baru Diedit!']);
     }
 
@@ -95,9 +86,10 @@ class CourseController extends Controller
             $course->delete();
             DB::commit();
 
-            return redirect()->route('admin.courses.index')->with(['success' => 'Postingan Berhasil Dihapus']);
+            return redirect()->route('admin.courses.index')->with(['success' => 'Mata Kuliah Berhasil Dihapus']);
         } catch (\Exception $e) {
             DB::rollBack();
+
             return redirect()->route('admin.courses.index')->with('error', 'terjadinya sebuah error');
         }
     }

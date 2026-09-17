@@ -12,6 +12,6 @@ class SubjectPerson extends Model
     protected $fillable = [
         'name',
         'subject_id',
-        'person_id'
+        'person_id',
     ];
 }

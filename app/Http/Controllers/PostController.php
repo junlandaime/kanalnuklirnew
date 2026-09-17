@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
-use App\Models\Category;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
-use Carbon\Carbon;
+use App\Models\Category;
+use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
@@ -19,10 +17,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
         $user = Auth::user();
         $posts = Post::query();
-        $postsQ = Post::orderBy('id', 'desc')->get();
 
         if ($user->hasRole('teacher')) {
             $posts->whereHas('author', function ($posts) use ($user) {
@@ -32,7 +28,6 @@ class PostController extends Controller
 
         $posts = $posts->orderBy('id', 'desc')->paginate(10);
 
-
         return view('admin.posts.index', compact('posts'));
     }
 
@@ -41,11 +36,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        $user = Auth::user();
-        // $categories = Category::query();
         $categories = Category::with(['child'])->withCount(['child'])->getParent()->orderBy('name', 'ASC')->get();
         $parent = Category::getParent()->orderBy('name', 'ASC')->get();
-
 
         return view('admin.posts.create', compact('categories', 'parent'));
     }
@@ -55,9 +47,7 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-        //
         DB::transaction(function () use ($request) {
-
             $validated = $request->validated();
 
             if ($request->hasFile('image')) {
@@ -68,7 +58,6 @@ class PostController extends Controller
             }
 
             $validated['slug'] = Str::slug($validated['title']);
-            // $validated['published_at'] = Carbon::now();
             $validated['user_id'] = Auth::user()->id;
 
             Post::create($validated);
@@ -82,18 +71,19 @@ class PostController extends Controller
      */
     public function toggle(Post $post)
     {
-        //
         if ($post->status) {
             $post->update([
-                'status' => 0
+                'status' => 0,
             ]);
+
             return redirect()->route('admin.posts.index')->with(['error' => 'Postingan Baru DiDraftkan!']);
         }
 
-        if (!$post->status) {
+        if (! $post->status) {
             $post->update([
-                'status' => 1
+                'status' => 1,
             ]);
+
             return redirect()->route('admin.posts.index')->with(['success' => 'Postingan Baru Dipublish!']);
         }
     }
@@ -105,7 +95,7 @@ class PostController extends Controller
     {
         $post = Post::find($id);
         $categories = Category::with(['child'])->withCount(['child'])->getParent()->orderBy('name', 'ASC')->get();
-        $parent = Category::getParent()->orderBy('name', 'ASC')->get();
+
         return view('admin.posts.edit', compact('post', 'categories'));
     }
 
@@ -114,10 +104,7 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, Post $post)
     {
-        // dd($post);
-        //
         DB::transaction(function () use ($request, $post) {
-
             $validated = $request->validated();
 
             if ($request->hasFile('image')) {
@@ -147,6 +134,7 @@ class PostController extends Controller
             return redirect()->route('admin.posts.index')->with(['success' => 'Postingan Berhasil Dihapus']);
         } catch (\Exception $e) {
             DB::rollBack();
+
             return redirect()->route('admin.posts.index')->with('error', 'terjadinya sebuah error');
         }
     }

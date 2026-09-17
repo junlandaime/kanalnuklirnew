@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
-use App\Models\User;
-use App\Models\Person;
 use App\Models\Category;
 use App\Models\Course;
+use App\Models\Person;
+use App\Models\Post;
 use App\Models\Subject;
-use Illuminate\Http\Request;
 
 class FrontController extends Controller
 {
@@ -36,12 +34,12 @@ class FrontController extends Controller
     public function people_details(Person $person)
     {
         $people = Person::where('status', 1)->orderBy('name', 'asc')->get();
+
         return view('front.details', compact('person', 'people'));
     }
 
     public function news()
     {
-
         $posts = Post::query();
 
         $posts->whereHas('category', function ($posts) {
@@ -49,8 +47,6 @@ class FrontController extends Controller
         });
 
         $categories = Category::with(['child'])->withCount(['child'])->getParent()->orderBy('name', 'ASC')->get();
-
-        // $categories = Category::with(['child'])->where('parent_id', '!=', 3)->get();
         $posts = $posts->where('status', 1)->orderBy('id', 'desc')->paginate(10);
 
         return view('front.news', compact('posts', 'categories'));
@@ -59,20 +55,18 @@ class FrontController extends Controller
     public function news_details(Post $post)
     {
         $categories = Category::where('parent_id', '!=', 3)->get();
+
         return view('front.news_detail', compact('post', 'categories'));
     }
 
     public function blog()
     {
-
-        // $posts = Post::orderBy('id', 'desc')->paginate(8);
         $posts = Post::query();
 
         $posts->whereHas('category', function ($posts) {
             $posts->where('parent_id', 3);
         });
         $categories = Category::with(['child'])->withCount(['child'])->getParent()->orderBy('name', 'ASC')->get();
-
         $posts = $posts->where('status', 1)->orderBy('id', 'desc')->paginate(10);
 
         return view('front.posts', compact('posts', 'categories'));
@@ -81,6 +75,7 @@ class FrontController extends Controller
     public function blog_details(Post $post)
     {
         $categories = Category::with(['child'])->get();
+
         return view('front.post', compact('post', 'categories'));
     }
 
@@ -93,7 +88,6 @@ class FrontController extends Controller
             $posts->whereHas('category', function ($posts) use ($category) {
                 $posts->where('category_id', $category->id);
             });
-            // $categories = Category::with(['child'])->where('parent_id', '!=', 3)->get();
             $posts = $posts->where('status', 1)->orderBy('id', 'desc')->paginate(10);
 
             return view('front.posts', compact('posts', 'categories', 'category'));
@@ -101,7 +95,6 @@ class FrontController extends Controller
             $posts->whereHas('category', function ($posts) use ($category) {
                 $posts->where('category_id', $category->id);
             });
-            // $categories = Category::with(['child'])->where('parent_id', '!=', 3)->get();
             $posts = $posts->where('status', 1)->orderBy('id', 'desc')->paginate(10);
 
             return view('front.news', compact('posts', 'categories', 'category'));
@@ -111,22 +104,22 @@ class FrontController extends Controller
     public function course()
     {
         $courses = Course::orderBy('code', 'asc')->get();
+
         return view('front.courses', compact('courses'));
     }
 
     public function about()
     {
-
         return view('front.about');
     }
+
     public function lecturer()
     {
-
         return view('front.about_lecturer');
     }
+
     public function roadmap()
     {
-
         return view('front.about_roadmap');
     }
 }

@@ -12,7 +12,7 @@ class Category extends Model
     protected $fillable = [
         'name',
         'slug',
-        'parent_id'
+        'parent_id',
     ];
 
     public function posts()
@@ -29,7 +29,6 @@ class Category extends Model
     {
         return $query->whereNull('parent_id');
     }
-
 
     public function child()
     {

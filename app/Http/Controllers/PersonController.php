@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
-use App\Models\User;
-use App\Models\Person;
-use App\Models\Subject;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StorePeopleRequest;
 use App\Http\Requests\UpdatePeopleRequest;
+use App\Models\Person;
+use App\Models\Subject;
 use App\Models\SubjectPerson;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class PersonController extends Controller
 {
@@ -38,9 +36,8 @@ class PersonController extends Controller
      */
     public function store(StorePeopleRequest $request)
     {
-        // $subjek = $request->subjs;
-        $subjek = json_decode($request->subjs, TRUE);
-        $hasil = array();
+        $subjek = json_decode($request->subjs, true);
+        $hasil = [];
 
         foreach ($subjek as $a => $b) {
             foreach ($b as $c => $d) {
@@ -48,9 +45,7 @@ class PersonController extends Controller
             }
         }
 
-        // dd($hasil);
         DB::transaction(function () use ($request, $hasil) {
-
             $validated = $request->validated();
 
             if ($request->hasFile('foto')) {
@@ -60,12 +55,10 @@ class PersonController extends Controller
                 $fotoPath = 'fotos/foto-default.png';
             }
 
-            // dd($validated['name']);
-
             $user = User::create([
                 'name' => $validated['name'],
                 'email' => $validated['email'],
-                'password' => bcrypt('123123123')
+                'password' => bcrypt('123123123'),
             ]);
             $validated['slug'] = Str::slug($validated['name']);
             $validated['user_id'] = $user['id'];
@@ -74,23 +67,21 @@ class PersonController extends Controller
 
             $person = Person::create($validated);
 
-            // $long = $request->subjs;
-            // $arraySub = (explode(",", $long));
             foreach ($hasil as $sub) {
                 $dataSub = Subject::where('name', $sub)->get();
-                if (sizeof($dataSub) != 0) {
+                if (count($dataSub) != 0) {
                     SubjectPerson::create([
                         'subject_id' => $dataSub[0]->id,
-                        'person_id' => $person->id
+                        'person_id' => $person->id,
                     ]);
                 } else {
                     $newSub = Subject::create([
                         'name' => $sub,
-                        'slug' => Str::slug($sub)
+                        'slug' => Str::slug($sub),
                     ]);
                     SubjectPerson::create([
                         'subject_id' => $newSub->id,
-                        'person_id' => $person->id
+                        'person_id' => $person->id,
                     ]);
                 }
             }
@@ -112,15 +103,17 @@ class PersonController extends Controller
         //
         if ($person->status) {
             $person->update([
-                'status' => 0
+                'status' => 0,
             ]);
+
             return redirect()->route('admin.people.index')->with(['error' => 'Data Person Tidak Dipublish!']);
         }
 
-        if (!$person->status) {
+        if (! $person->status) {
             $person->update([
-                'status' => 1
+                'status' => 1,
             ]);
+
             return redirect()->route('admin.people.index')->with(['success' => 'Data Person Baru Dipublish!']);
         }
     }
@@ -139,10 +132,8 @@ class PersonController extends Controller
      */
     public function update(UpdatePeopleRequest $request, Person $person)
     {
-        // dd($request->subjs);
-
-        $subjek = json_decode($request->subjs, TRUE);
-        $hasil = array();
+        $subjek = json_decode($request->subjs, true);
+        $hasil = [];
 
         foreach ($subjek as $a => $b) {
             foreach ($b as $c => $d) {
@@ -163,30 +154,29 @@ class PersonController extends Controller
                 ->where('id', $person->user_id)
                 ->update([
                     'name' => $validated['name'],
-                    'email' => $validated['email']
+                    'email' => $validated['email'],
                 ]);
 
             $validated['slug'] = Str::slug($validated['name']);
-
 
             $person->update($validated);
             $person->subjects()->detach();
 
             foreach ($hasil as $sub) {
                 $dataSub = Subject::where('name', $sub)->get();
-                if (sizeof($dataSub) != 0) {
+                if (count($dataSub) != 0) {
                     SubjectPerson::create([
                         'subject_id' => $dataSub[0]->id,
-                        'person_id' => $person->id
+                        'person_id' => $person->id,
                     ]);
                 } else {
                     $newSub = Subject::create([
                         'name' => $sub,
-                        'slug' => Str::slug($sub)
+                        'slug' => Str::slug($sub),
                     ]);
                     SubjectPerson::create([
                         'subject_id' => $newSub->id,
-                        'person_id' => $person->id
+                        'person_id' => $person->id,
                     ]);
                 }
             }
@@ -209,6 +199,7 @@ class PersonController extends Controller
             return redirect()->route('admin.people.index')->with('Success', 'Person Berhasil Dihapus');
         } catch (\Exception $e) {
             DB::rollBack();
+
             return redirect()->route('admin.people.index')->with('error', 'terjadinya sebuah error');
         }
     }

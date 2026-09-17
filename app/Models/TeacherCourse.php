@@ -11,6 +11,6 @@ class TeacherCourse extends Model
 
     protected $fillable = [
         'teacher_id',
-        'course_id'
+        'course_id',
     ];
 }

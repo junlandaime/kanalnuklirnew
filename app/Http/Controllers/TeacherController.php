@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Mail\DosenVerifyMail;
 use App\Models\Person;
 use App\Models\Teacher;
-use Illuminate\Support\Str;
+use App\Models\User;
 use Illuminate\Http\Request;
-use App\Mail\DosenVerifyMail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
-use App\Http\Requests\StoreTeacherRequest;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 class TeacherController extends Controller
@@ -46,14 +45,14 @@ class TeacherController extends Controller
     {
         //
         $validated = $request->validate([
-            'email' => 'required|email'
+            'email' => 'required|email',
         ]);
 
         $person = Person::where('email', $validated['email'])->first();
 
-        if (!$person) {
+        if (! $person) {
             return back()->withErrors([
-                'email' => 'Email ini Tidak Terdaftar sebagai Email Dosen'
+                'email' => 'Email ini Tidak Terdaftar sebagai Email Dosen',
             ]);
         }
 
@@ -61,15 +60,14 @@ class TeacherController extends Controller
 
         if ($user->hasRole('teacher')) {
             return back()->withErrors([
-                'email' => 'Email ini telah terverifikasi, silahkan langsung login'
+                'email' => 'Email ini telah terverifikasi, silahkan langsung login',
             ]);
         }
         if ($user->remember_token) {
             return back()->withErrors([
-                'email' => 'Email ini telah terverifikasi, silahkan verifikasi status Dosen Anda di email tersebut'
+                'email' => 'Email ini telah terverifikasi, silahkan verifikasi status Dosen Anda di email tersebut',
             ]);
         }
-
 
         DB::transaction(function () use ($user, $validated) {
 
@@ -78,20 +76,16 @@ class TeacherController extends Controller
 
             $user->update([
                 'password' => $password,
-                'remember_token' => $remembertoken
+                'remember_token' => $remembertoken,
             ]);
 
             // $teacher = Teacher::where('user_id', $user->id)->first();
-
-
 
             $validated['user_id'] = $user->id;
             $validated['is_active'] = false;
             $validated['activate_token'] = Str::random(30);
 
             $teacher = Teacher::create($validated);
-
-
 
             DB::commit();
 
@@ -110,7 +104,6 @@ class TeacherController extends Controller
         $teacher = Teacher::where('activate_token', $token)->first();
         $user = User::where('id', $teacher->user_id)->first();
 
-
         DB::transaction(function () use ($teacher, $user) {
 
             if ($user->hasRole('student')) {
@@ -118,17 +111,16 @@ class TeacherController extends Controller
             }
 
             $user->update([
-                'remember_token' => null
+                'remember_token' => null,
             ]);
 
             if ($teacher) {
                 $teacher->update([
                     'activate_token' => null,
-                    'is_active' => 1
+                    'is_active' => 1,
                 ]);
 
                 $user->assignRole('teacher');
-
 
                 return Redirect(route('dashboard'))->with(['success' => 'Verifikasi Berhasil, Silahkan Login']);
             }
@@ -177,7 +169,7 @@ class TeacherController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             $error = ValidationException::withMessages([
-                'system_error' => ['System error!' . $e->getMessage()],
+                'system_error' => ['System error!'.$e->getMessage()],
             ]);
             throw $error;
         }

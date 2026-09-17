@@ -8,11 +8,9 @@ use App\Http\Controllers\PersonController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TeacherController;
-use App\Models\Person;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [FrontController::class, 'index'])->name('front.index');
-// Route::get('/details', [FrontController::class, 'details'])->name('front.detail');
 
 Route::get('/people', [FrontController::class, 'people'])->name('front.people');
 Route::get('/people/{person:slug}', [FrontController::class, 'people_details'])->name('front.people_details');
@@ -36,15 +34,10 @@ Route::get('/verify', [TeacherController::class, 'verify'])->name('teacher.verif
 Route::post('/verify', [TeacherController::class, 'verifyCheck'])->name('teacher.verify_check');
 Route::get('verify/{token}', [TeacherController::class, 'verifyDosen'])->name('teacher.verify_dosen');
 
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
-
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
 
     Route::prefix('administrator')->name('admin.')->group(function () {
         Route::resource('categories', CategoryController::class)
@@ -68,4 +61,4 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';

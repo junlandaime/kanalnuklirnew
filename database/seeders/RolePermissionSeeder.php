@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 
@@ -17,21 +16,21 @@ class RolePermissionSeeder extends Seeder
         //
 
         $adminRole = Role::create([
-            'name' => 'admin'
+            'name' => 'admin',
         ]);
 
         $teacherRole = Role::create([
-            'name' => 'teacher'
+            'name' => 'teacher',
         ]);
 
         $studentRole = Role::create([
-            'name' => 'student'
+            'name' => 'student',
         ]);
 
         $userAdmin = User::create([
             'name' => 'Administrator',
             'email' => 'Admin@kanalnuklir.id',
-            'password' => bcrypt('secret')
+            'password' => bcrypt('secret'),
         ]);
 
         $userAdmin->assignRole($adminRole);
